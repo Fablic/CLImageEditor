@@ -125,8 +125,6 @@ static NSString* const kCLDrawToolEraserIconName = @"eraserIconAssetsName";
     
     [slider setMaximumTrackImage:[UIImage new] forState:UIControlStateNormal];
     [slider setMinimumTrackImage:[UIImage new] forState:UIControlStateNormal];
-    [slider setThumbImage:[UIImage new] forState:UIControlStateNormal];
-    slider.thumbTintColor = [UIColor whiteColor];
     
     return slider;
 }
