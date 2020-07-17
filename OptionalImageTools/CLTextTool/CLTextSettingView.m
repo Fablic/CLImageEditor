@@ -301,14 +301,24 @@
 - (void)textViewDidChange:(UITextView*)textView
 {
     NSRange selection = textView.selectedRange;
-    if(selection.location+selection.length == textView.text.length && [textView.text characterAtIndex:textView.text.length-1] == '\n') {
+
+    if (selection.length == 0 && selection.location == 0) { // KKR 20191130 fix for adding text and then deleting all text
+        [textView scrollRangeToVisible:textView.selectedRange];
+
+        if([self.delegate respondsToSelector:@selector(textSettingView:didChangeText:)]){
+            [self.delegate textSettingView:self didChangeText:NSLocalizedString(@"Text", nil)];
+        }
+
+        return;
+    }
+    else if(selection.location+selection.length == textView.text.length && [textView.text characterAtIndex:textView.text.length-1] == '\n') {
         [textView layoutSubviews];
         [textView scrollRectToVisible:CGRectMake(0, textView.contentSize.height - 1, 1, 1) animated:YES];
     }
     else {
         [textView scrollRangeToVisible:textView.selectedRange];
     }
-    
+
     if([self.delegate respondsToSelector:@selector(textSettingView:didChangeText:)]){
         [self.delegate textSettingView:self didChangeText:textView.text];
     }
